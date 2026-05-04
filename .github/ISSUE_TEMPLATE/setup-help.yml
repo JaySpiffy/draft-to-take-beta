@@ -1,0 +1,44 @@
+name: Setup help
+description: Ask for help getting the Docker beta running.
+title: "[Setup]: "
+labels: ["setup", "beta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when the app does not start, Docker cannot pull images, or model downloads fail.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you stuck on?
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM
+  - type: input
+    id: docker
+    attributes:
+      label: Docker Desktop version
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where did it fail?
+      options:
+        - Docker Desktop not running
+        - Docker GPU check failed
+        - Image pull failed
+        - Container startup failed
+        - Model download failed
+        - Frontend did not open
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Safe log excerpt
+      render: text

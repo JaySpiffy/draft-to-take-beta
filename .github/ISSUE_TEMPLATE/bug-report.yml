@@ -1,0 +1,71 @@
+name: Bug report
+description: Report a Draft to Take beta failure or broken workflow.
+title: "[Bug]: "
+labels: ["bug", "beta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing Draft to Take. Do not upload private scripts, voices, tokens, or personal audio.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the failure in a few sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Ran start.bat
+        2. Opened Script Canvas
+        3. Clicked ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 23H2
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM
+      placeholder: RTX 4090, 24GB
+  - type: input
+    id: ram
+    attributes:
+      label: System RAM
+      placeholder: 32GB
+  - type: input
+    id: docker
+    attributes:
+      label: Docker Desktop version
+  - type: dropdown
+    id: gpu_check
+    attributes:
+      label: Did Docker GPU detection pass?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Safe log excerpt
+      description: Paste only logs you are comfortable sharing publicly. Remove tokens, private paths, and private script text.
+      render: text
+  - type: checkboxes
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      options:
+        - label: I ran collect-diagnostics.bat and reviewed it for private information before sharing any excerpts.

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Draft to Take beta setup notes
+    url: https://github.com/JaySpiffy/IndexTTS-Workflow-Studio
+    about: Check the main project page before filing a setup issue.
