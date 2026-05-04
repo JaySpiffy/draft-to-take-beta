@@ -136,6 +136,23 @@ Important folders:
 - `shared\audio\music` - generated or imported music assets.
 - `shared\data` - app/project data.
 
+## Models Used By This Beta
+
+This beta does not bundle model weights. The launcher and containers download the configured models into your local shared folder or Hugging Face cache.
+
+| Feature area | Default model/source | Enabled by default | Where it is stored | Notes |
+| --- | --- | --- | --- | --- |
+| Dialogue TTS | `IndexTeam/IndexTTS-2` | Yes | `shared\models\checkpoints` | Main Script Canvas and timeline speech generation. The upstream bundle includes the IndexTTS2 checkpoints, tokenizer/BPE assets, emotion and speaker matrices, and related vocoder/runtime files used by IndexTTS2. |
+| Script assistant and emotion detection | `ufoym/Qwen3-8B-Q4_K_M-GGUF` / `qwen3-8b-q4_k_m.gguf` | Yes | `shared\models\llm` | Managed llama.cpp sidecar used by the optional AI Thread and by Qwen emotion-vector detection. |
+| Reusable voice design | `k2-fsa/OmniVoice` | Yes | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Creates prepared voice WAVs for the Voice Studio. Final dialogue rendering still uses IndexTTS2. |
+| SFX and ambience | `AEmotionStudio/woosh-models`, default model `Woosh-DFlow` | No | `shared\models\woosh` | Optional SFX/music sidecar. `Woosh-Flow` can be selected as a slower quality option. |
+| Music beds | `facebook/musicgen-small` | No | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Optional music generation through the SFX/music sidecar. |
+| Sound-cue alignment | `openai/whisper-tiny.en` | Lazy/optional | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Used only when Whisper alignment is available and sound cue markers need word-timestamp alignment. |
+| Speaker similarity checks | `speechbrain/spkrec-ecapa-voxceleb` and `funasr/campplus` / `campplus_cn_common.bin` | Lazy/optional | `shared\models\pretrained` and Hugging Face cache | Used for optional speaker similarity scoring and reranking during voice prep/quality checks. |
+| Neural cleanup | DeepFilterNet via the `df` package | Lazy/optional | Docker cache volume / package cache | Used only when DeepFilterNet cleanup is selected or available through `auto` cleanup mode. Classic noise reduction can be used when it is unavailable. |
+
+Most defaults can be changed in `.env`. The most useful model overrides are `INDTEXTS_MODEL_REPO`, `SCRIPT_LLM_MODEL_REPO_ID`, `SCRIPT_LLM_MODEL_FILENAME`, `OMNIVOICE_MODEL_ID`, `SFX_WOOSH_WEIGHTS_REPO`, `SFX_WOOSH_MODEL_NAME`, `MUSIC_MODEL_ID`, and `DRAFT_TO_TAKE_WHISPER_MODEL`.
+
 ## Enabled By Default
 
 The beta starts these services by default:
