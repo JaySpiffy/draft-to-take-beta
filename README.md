@@ -4,6 +4,10 @@ Draft to Take is a local-first AI audio production studio for turning scripts in
 
 This beta release repo contains only deployment files. The source code is not included here. Docker pulls prebuilt beta images from GitHub Container Registry and stores your models, voices, projects, and outputs in a persistent local folder.
 
+## Beta Status
+
+This repo is staged for the closed Docker beta, but it is not ready to send to testers until all `v3.0.0-beta.1` container images are published. The frontend and script-LLM images have built successfully; the CUDA-heavy backend, OmniVoice, and SFX images still need to be published from a machine or runner with enough disk space for the PyTorch/CUDA build.
+
 ## Requirements
 
 - Windows 11 recommended.
