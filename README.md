@@ -43,7 +43,7 @@ Prepare reusable voices, manage source clips, and keep cast-building separate fr
 
 ## Beta Status
 
-`v3.0.0-beta.2` is ready for a small closed beta with Docker-capable testers.
+`v3.0.0-beta.3` is ready for a small closed beta with Docker-capable testers.
 
 All beta container images are public and pullable from GitHub Container Registry:
 
@@ -200,7 +200,7 @@ Your shared folder under `%USERPROFILE%\DraftToTake\shared` is not deleted.
 If a new release uses a new Docker image tag, check `.env` and update:
 
 ```text
-DRAFT_TO_TAKE_IMAGE_TAG=v3.0.0-beta.2
+DRAFT_TO_TAKE_IMAGE_TAG=v3.0.0-beta.3
 ```
 
 ## Stopping
