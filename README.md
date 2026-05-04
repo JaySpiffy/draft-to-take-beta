@@ -6,7 +6,15 @@ This beta release repo contains only deployment files. The source code is not in
 
 ## Beta Status
 
-This repo is staged for the closed Docker beta, but it is not ready to send to testers until all `v3.0.0-beta.1` container images are published. The frontend and script-LLM images have built successfully; the CUDA-heavy backend, OmniVoice, and SFX images still need to be published from a machine or runner with enough disk space for the PyTorch/CUDA build.
+The `v3.0.0-beta.1` container images have been built and pushed, but this repo is not ready to send to testers until the GHCR packages are made public or testers are given registry login access. Anonymous Docker pulls currently receive `denied`.
+
+For a low-friction Reddit beta, make these packages public in GitHub Packages before sharing the link:
+
+- `draft-to-take-backend`
+- `draft-to-take-frontend`
+- `draft-to-take-script-llm`
+- `draft-to-take-omnivoice`
+- `draft-to-take-sfx`
 
 ## Requirements
 
