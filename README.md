@@ -19,6 +19,26 @@ http://localhost:3000
 
 First launch can be slow because Docker images and model files are large. Keep the terminal open and let it finish.
 
+## Screenshots
+
+### Script Canvas
+
+Draft, revise, assign speakers, detect emotions, and prepare production lines in one focused workspace.
+
+![Script Canvas production view](screenshots/01-script-canvas.png)
+
+### Script Canvas Timeline
+
+The Script Canvas can place lines onto its built-in timeline drawer so you can review timing, generate missing takes, and export the mix without leaving the writing flow.
+
+![Script Canvas built-in timeline drawer](screenshots/02-script-canvas-timeline.png)
+
+### Voice Studio
+
+Prepare reusable voices, manage source clips, and keep cast-building separate from the main writing canvas.
+
+![Voice Studio](screenshots/03-voice-studio.png)
+
 ## Beta Status
 
 `v3.0.0-beta.1` is ready for a small closed beta with Docker-capable testers.
