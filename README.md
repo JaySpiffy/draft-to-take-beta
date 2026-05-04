@@ -4,6 +4,21 @@ Draft to Take is a local-first AI audio production studio for turning scripts in
 
 This beta repo contains the Docker launcher, configuration, diagnostics scripts, and tester docs. It does not contain the private source code or model weights. Docker pulls prebuilt beta images from GitHub Container Registry, then the app downloads supported model files into your own local machine.
 
+## Quick Run
+
+Already have Docker Desktop running?
+
+1. Download this repo as a ZIP.
+2. Extract it somewhere simple, for example `C:\DraftToTakeBeta`.
+3. Double-click `start.bat`.
+4. Open the URL printed in the terminal, usually:
+
+```text
+http://localhost:3000
+```
+
+First launch can be slow because Docker images and model files are large. Keep the terminal open and let it finish.
+
 ## Beta Status
 
 `v3.0.0-beta.1` is ready for a small closed beta with Docker-capable testers.
