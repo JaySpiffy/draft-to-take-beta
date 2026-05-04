@@ -6,15 +6,7 @@ This beta release repo contains only deployment files. The source code is not in
 
 ## Beta Status
 
-The `v3.0.0-beta.1` container images have been built and pushed, but this repo is not ready to send to testers until the GHCR packages are made public or testers are given registry login access. Anonymous Docker pulls currently receive `denied`.
-
-For a low-friction Reddit beta, make these packages public in GitHub Packages before sharing the link:
-
-- `draft-to-take-backend`
-- `draft-to-take-frontend`
-- `draft-to-take-script-llm`
-- `draft-to-take-omnivoice`
-- `draft-to-take-sfx`
+The `v3.0.0-beta.1` container images are built, pushed, and publicly pullable from GitHub Container Registry. This repo is ready for a small closed beta with Docker-capable testers.
 
 ## Requirements
 
