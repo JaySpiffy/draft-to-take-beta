@@ -43,7 +43,7 @@ Prepare reusable voices, manage source clips, and keep cast-building separate fr
 
 ## Beta Status
 
-`v3.0.0-beta.4` is ready for a small closed beta with Docker-capable testers.
+`v3.0.0-beta.8` is ready for a small closed beta with Docker-capable testers.
 
 All beta container images are public and pullable from GitHub Container Registry:
 
@@ -110,9 +110,10 @@ The launcher:
 - Checks whether Docker can see your NVIDIA GPU.
 - Pulls the prebuilt beta images.
 - Starts the backend, frontend, Qwen sidecar, and OmniVoice sidecar.
-- Leaves SFX/music disabled unless you opt in.
+- Starts the SFX/music sidecar automatically when Docker GPU support is available.
+- Opens the local frontend URL after a successful start.
 
-If ports `3000` or `8001` are busy, the launcher tries nearby ports and prints the actual URLs.
+If the port values are blank in `.env`, the launcher tries nearby ports and prints the actual URLs. Keep them blank unless you need stable URLs.
 
 ## Where Your Files Go
 
@@ -145,8 +146,8 @@ This beta does not bundle model weights. The launcher and containers download th
 | Dialogue TTS | `IndexTeam/IndexTTS-2` | Yes | `shared\models\checkpoints` | Main Script Canvas and timeline speech generation. The upstream bundle includes the IndexTTS2 checkpoints, tokenizer/BPE assets, emotion and speaker matrices, and related vocoder/runtime files used by IndexTTS2. |
 | Script assistant and emotion detection | `ufoym/Qwen3-8B-Q4_K_M-GGUF` / `qwen3-8b-q4_k_m.gguf` | Yes | `shared\models\llm` | Managed llama.cpp sidecar used by the optional AI Thread and by Qwen emotion-vector detection. |
 | Reusable voice design | `k2-fsa/OmniVoice` | Yes | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Creates prepared voice WAVs for the Voice Studio. Final dialogue rendering still uses IndexTTS2. |
-| SFX and ambience | `AEmotionStudio/woosh-models`, default model `Woosh-DFlow` | No | `shared\models\woosh` | Optional SFX/music sidecar. `Woosh-Flow` can be selected as a slower quality option. |
-| Music beds | `facebook/musicgen-small` | No | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Optional music generation through the SFX/music sidecar. |
+| SFX and ambience | `AEmotionStudio/woosh-models`, default model `Woosh-DFlow` | Yes when Docker GPU support is available | `shared\models\woosh` | SFX/music sidecar. `Woosh-Flow` can be selected as a slower quality option. |
+| Music beds | `facebook/musicgen-small` | Yes when Docker GPU support is available | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Music generation through the SFX/music sidecar. |
 | Sound-cue alignment | `openai/whisper-tiny.en` | Lazy/optional | Hugging Face cache under `shared\models\checkpoints\hf_cache` | Used only when Whisper alignment is available and sound cue markers need word-timestamp alignment. |
 | Speaker similarity checks | `speechbrain/spkrec-ecapa-voxceleb` and `funasr/campplus` / `campplus_cn_common.bin` | Lazy/optional | `shared\models\pretrained` and Hugging Face cache | Used for optional speaker similarity scoring and reranking during voice prep/quality checks. |
 | Neural cleanup | DeepFilterNet via the `df` package | Lazy/optional | Docker cache volume / package cache | Used only when DeepFilterNet cleanup is selected or available through `auto` cleanup mode. Classic noise reduction can be used when it is unavailable. |
@@ -161,22 +162,23 @@ The beta starts these services by default:
 - Frontend UI.
 - Managed Qwen sidecar, used for emotion detection and the optional AI Thread.
 - OmniVoice sidecar, used for beta testing reusable voice design.
+- SFX/music sidecar, when Docker GPU support is available.
 
 Qwen is enabled by default because emotion detection depends on it. You can turn off the AI Thread in the app settings if you do not want to use the experimental assistant workflow.
 
-## Optional SFX And Music
+## SFX And Music
 
-SFX/music generation is disabled by default because the current model-backed generators are experimental, heavier, and license-dependent.
+SFX/music generation is enabled by default when Docker can see an NVIDIA GPU. The current model-backed generators are experimental, heavier, and license-dependent, so you can still turn them off.
 
-To test it, edit `.env` and set:
+To disable SFX/music, edit `.env` and set:
 
 ```text
-INDTEXTS_SFX_ENABLED=true
+INDTEXTS_SFX_ENABLED=false
 ```
 
-Then run `start.bat` again.
+Then run `start.bat` again. If Docker GPU support is not available, `start.bat` leaves SFX/music disabled unless you explicitly opt in.
 
-Only enable SFX/music if your machine has enough VRAM and you understand that generated asset rights depend on the upstream model licenses and your use case.
+Only use SFX/music if your machine has enough VRAM and you understand that generated asset rights depend on the upstream model licenses and your use case.
 
 ## Updating The Beta
 
@@ -200,7 +202,7 @@ Your shared folder under `%USERPROFILE%\DraftToTake\shared` is not deleted.
 If a new release uses a new Docker image tag, check `.env` and update:
 
 ```text
-DRAFT_TO_TAKE_IMAGE_TAG=v3.0.0-beta.4
+DRAFT_TO_TAKE_IMAGE_TAG=v3.0.0-beta.8
 ```
 
 ## Stopping
@@ -249,11 +251,13 @@ This is expected on a fresh install. Docker images and model files are large. Ke
 
 ### Frontend URL Does Not Open
 
-Check the terminal output. If port `3000` was busy, the launcher may choose another port such as:
+Check the terminal output. The launcher may choose another port if `3000` is busy, such as:
 
 ```text
 http://localhost:3001
 ```
+
+If the browser shows `Cannot GET /` on `localhost:3000`, check the `Docker frontend binding:` line printed by `start.bat`. If it is missing or points at a different port, run `collect-diagnostics.bat` and include the `Compose PS` section in the issue.
 
 ### Model Download Needs Authentication
 
@@ -307,7 +311,7 @@ Read:
 - [BETA_TERMS.md](BETA_TERMS.md)
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
 
-SFX/music model-backed generation is optional, experimental, and license-dependent.
+SFX/music model-backed generation is experimental and license-dependent. It can be disabled with `INDTEXTS_SFX_ENABLED=false`.
 
 ## Privacy Note
 
